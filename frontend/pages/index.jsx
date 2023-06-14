@@ -3,7 +3,7 @@ import InstructionsComponent from "../components/InstructionsComponent";
 
 export default function Home() {
   return (
-    <div>
+    <div className="bg-dark">
       <main className={styles.main}>
         <InstructionsComponent></InstructionsComponent>
       </main>

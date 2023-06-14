@@ -1,27 +1,23 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import Link from "next/link"; // Import Link from Next.js
-import styles from "../../styles/Navbar.module.css";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
-export default function Navbar() {
+function ColorSchemesExample() {
   return (
-    <nav className={styles.navbar}>
-      <a href="https://alchemy.com/?a=create-web3-dapp" target={"_blank"}>
-        <img className={styles.alchemy_logo} src="/cw3d-logo.png"></img>
-      </a>
-
-      <div className={styles.nav_links}>
-        <Link href="/" passHref>
-          <span className={styles.nav_link}>Home</span>
-        </Link>
-        <Link href="/dashboard" passHref>
-          <span className={styles.nav_link}>Dashboard</span>
-        </Link>
-        <Link href="/listings" passHref>
-          <span className={styles.nav_link}>Listings</span>
-        </Link>
-      </div>
-
-      <ConnectButton></ConnectButton>
-    </nav>
+    <>
+      <Navbar bg="primary" variant="dark">
+        <Container>
+          <Navbar.Brand href="/" className="font-weight-bold">Home</Navbar.Brand>
+          <Nav className="me-auto">
+            <Nav.Link href="/post" className="font-weight-bold">Post</Nav.Link>
+            <Nav.Link href="/listings" className="font-weight-bold">Listings</Nav.Link>
+          </Nav>
+          <ConnectButton />
+        </Container>
+      </Navbar>
+    </>
   );
 }
+
+export default ColorSchemesExample;

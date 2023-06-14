@@ -1,8 +1,7 @@
-// pages/listings.jsx
 import { useState } from "react";
 import ListingCard from "../components/ListingCard";
 import NewListingForm from "../components/NewListingForm";
-import "tailwindcss/tailwind.css"; // import tailwind css
+import Table from "react-bootstrap/Table";
 
 export default function Listings() {
   const [listings, setListings] = useState([
@@ -24,26 +23,18 @@ export default function Listings() {
     },
   ]);
 
-  const handleCreateListing = (newListing) => {
-    setListings((prevListings) => [
-      ...prevListings,
-      { ...newListing, id: prevListings.length + 1 },
-    ]);
-  };
-
   return (
-    <div className="text-white p-6">
+    <div className="text-white p-6 bg-dark">
       <h1 className="text-4xl mb-4">Listings</h1>
-      <NewListingForm onCreateListing={handleCreateListing} />
-      <table className="w-full text-left table-auto">
+      <Table striped bordered className="table-dark">
         <thead>
           <tr>
-            <th className="px-4 py-2">ID</th>
-            <th className="px-4 py-2">Seller</th>
-            <th className="px-4 py-2">Crypto</th>
-            <th className="px-4 py-2">Price</th>
-            <th className="px-4 py-2">Order Range</th>
-            <th className="px-4 py-2">Payment Method</th>
+            <th>#</th>
+            <th>Seller</th>
+            <th>Crypto</th>
+            <th>Price</th>
+            <th>Order Range</th>
+            <th>Payment Method</th>
           </tr>
         </thead>
         <tbody>
@@ -51,7 +42,7 @@ export default function Listings() {
             <ListingCard key={listing.id} listing={listing} />
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 }

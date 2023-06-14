@@ -1,5 +1,8 @@
-// components/NewListingForm.jsx
-import { useState } from "react";
+import { Button } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { useState } from 'react';
 
 export default function NewListingForm({ onCreateListing }) {
   const [seller, setSeller] = useState("");
@@ -33,81 +36,85 @@ export default function NewListingForm({ onCreateListing }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Seller
-        <input
-          type="text"
-          value={seller}
-          onChange={(e) => setSeller(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Crypto
-        <select
-          value={crypto}
-          onChange={(e) => setCrypto(e.target.value)}
-          required
-        >
-          <option value="">-- Select Crypto --</option>
-          <option value="MATIC">MATIC</option>
-          <option value="ETH">ETH</option>
-          <option value="USDT">USDT</option>
-          <option value="Sepolia">Sepolia</option>
-        </select>
-      </label>
-      <label>
-        Price
-        <input
-          type="number"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Min order
-        <input
-          type="number"
-          value={minOrder}
-          onChange={(e) => setMinOrder(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Max order
-        <input
-          type="number"
-          value={maxOrder}
-          onChange={(e) => setMaxOrder(e.target.value)}
-          required
-        />
-      </label>
-      {/* <label>
-        Price in USD
-        <input
-          type="number"
-          value={priceInUSD}
-          onChange={(e) => setPriceInUSD(e.target.value)}
-          required
-        />
-      </label> */}
-      <label>
-        Payment Method
-        <select
-          value={paymentMethod}
-          onChange={(e) => setPaymentMethod(e.target.value)}
-          required
-        >
-          <option value="">-- Select Payment Method --</option>
-          <option value="MATIC">MATIC</option>
-          <option value="ETH">ETH</option>
-          <option value="USDT">USDT</option>
-          <option value="Sepolia">Sepolia</option>
-        </select>
-      </label>
-      <button type="submit">Create Listing</button>
-    </form>
+    <Form onSubmit={handleSubmit} className='bg-dark'>
+      <Col className="d-flex align-items-center justify-content-center">
+        <h1 className="text-4xl mb-4">Post new listing</h1>
+      </Col>
+      <Row className="mb-3">
+        <Form.Group as={Col} md={6}>
+          <Form.Label className="d-flex align-items-center justify-content-center">Seller</Form.Label>
+          <Form.Control
+            type="text"
+            value={seller}
+            onChange={(e) => setSeller(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group as={Col} md={6}>
+          <Form.Label className="d-flex align-items-center justify-content-center">Crypto</Form.Label>
+          <Form.Select
+            value={crypto}
+            onChange={(e) => setCrypto(e.target.value)}
+            required
+          >
+            <option value="">-- Select Crypto --</option>
+            <option value="MATIC">MATIC</option>
+            <option value="ETH">ETH</option>
+            <option value="USDT">USDT</option>
+            <option value="Sepolia">Sepolia</option>
+          </Form.Select>
+        </Form.Group>
+      </Row>
+      <Row className="mb-3">
+        <Form.Group as={Col} md={6}>
+          <Form.Label className="d-flex align-items-center justify-content-center">Price</Form.Label>
+          <Form.Control
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group as={Col} md={6}>
+          <Form.Label className="d-flex align-items-center justify-content-center">Max order</Form.Label>
+          <Form.Control
+            type="number"
+            value={maxOrder}
+            onChange={(e) => setMaxOrder(e.target.value)}
+            required
+          />
+        </Form.Group>
+      </Row>
+      <Row className="mb-3">
+        <Form.Group as={Col} md={6}>
+          <Form.Label className="d-flex align-items-center justify-content-center">Price in USD</Form.Label>
+          <Form.Control
+            type="number"
+            value={priceInUSD}
+            onChange={(e) => setPriceInUSD(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group as={Col} md={6}>
+          <Form.Label className="d-flex align-items-center justify-content-center">Payment Method</Form.Label>
+          <Form.Select
+            value={paymentMethod}
+            onChange={(e) => setPaymentMethod(e.target.value)}
+            required
+          >
+            <option value="">-- Select Payment Method --</option>
+            <option value="MATIC">MATIC</option>
+            <option value="ETH">ETH</option>
+            <option value="USDT">USDT</option>
+            <option value="Sepolia">Sepolia</option>
+          </Form.Select>
+        </Form.Group>
+      </Row>
+      <Col className="d-flex align-items-center justify-content-center">
+        <Button variant="primary col-2 m-4" type="submit">
+          Create Listing
+        </Button>
+      </Col>
+    </Form>
   );
 }

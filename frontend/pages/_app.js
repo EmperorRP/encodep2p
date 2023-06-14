@@ -1,7 +1,6 @@
 import "../styles/globals.css";
-import "tailwindcss/tailwind.css";
-import "../styles/globals.css";
 import "@rainbow-me/rainbowkit/styles.css";
+import "bootstrap/dist/css/bootstrap.css";
 
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { configureChains, createClient, useAccount, WagmiConfig } from "wagmi";
