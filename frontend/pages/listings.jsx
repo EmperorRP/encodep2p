@@ -5,26 +5,10 @@ import Table from "react-bootstrap/Table";
 
 export default function Listings() {
   const [listings, setListings] = useState([
-    {
-      "token": "$USDC",
-      "address": "0x3e815f3dBfE293BDFE3861A15B57d7f5538dB630",
-      "amount": 250,
-      "requestId": 0,
-      "exchangeToken": "INR",
-      "unitAmount": 90
-    },
-    {
-      "token": "Btc",
-      "address": "0x0d1f2b79ac251295c72b1fD9D141CA41D4F78D49",
-      "amount": 12,
-      "requestId": 2,
-      "exchangeToken": "Usd",
-      "unitAmount": 5
-    }
   ]);
 
   useEffect(() => {
-    fetch("http://localhost:5001/listings")
+    fetch("http://localhost:3001/getAllSellers")
       .then((response) => response.json())
       .then((data) => {
         setListings(data.data);
@@ -40,11 +24,11 @@ export default function Listings() {
       <Table striped bordered className="table-dark">
         <thead>
           <tr>
-            <th>Token to buy</th>
-            <th>Amount to buy</th>
-            <th>Token to sell</th>
-            <th>Amount to sell</th>
-            <th>Address</th>
+            <th>Listed Token</th>
+            <th>Quantity</th>
+            <th>Exchange token</th>
+            <th>Price per unit</th>
+            <th>Seller Address</th>
             <th>Request ID</th>
             <th>Trade</th>
           </tr>

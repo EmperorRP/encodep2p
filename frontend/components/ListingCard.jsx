@@ -2,28 +2,28 @@
 
 import React from "react";
 import "tailwindcss/tailwind.css"; // import tailwind css
+import { useSigner } from "wagmi";
 
 export default function ListingCard({ listing }) {
-
-  const onclick = (e) => {
+  const{ data: signer} = useSigner();
+  const onBuy = (e) => {
     e.preventDefault();
 
     const request = {
-      "address": listing.address,
+      "address": signer._address,
       "sellOrderID": listing.requestId,
-      "tokenId": listing.token,
-      "amount": listing.amount,
+      "tokenId": listing.exchangeToken,
+      "amount": listing.amount*listing.unitAmount,
     };
 
     alert(JSON.stringify(request));
-
-    fetch("http://localhost:5001/listings", {
+ 
+    const requestOptions = {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(listing),
-    })
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(request),
+    };
+    fetch("http://localhost:3001/processBuyOrder",requestOptions)
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
@@ -43,7 +43,7 @@ export default function ListingCard({ listing }) {
       <td className="px-4 py-2">{listing.address}</td>
       <td className="px-4 py-2">{listing.requestId}</td>
       <td>
-        <button type="button" className="btn btn-primary"><i className="check icon" onClick={onclick}></i>Buy</button>
+        <button type="button" className="btn btn-primary" onClick={onBuy}>Buy</button>
       </td>
     </tr>
   );

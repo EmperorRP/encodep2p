@@ -15,7 +15,7 @@ export default function NewListingForm() {
   const account = useContext(AccountContext);
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    //e.preventDefault();
 
     const formData = {
       "address": account.address,
@@ -27,7 +27,7 @@ export default function NewListingForm() {
 
     alert(JSON.stringify(formData));
 
-    fetch('localhost::5001/postListing', {
+    fetch('http://localhost:3001/sellToken', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ export default function NewListingForm() {
       </Col>
       <Row className="mb-3">
         <Form.Group as={Col} md={6}>
-          <Form.Label className="d-flex align-items-center justify-content-center">Token to buy</Form.Label>
+          <Form.Label className="d-flex align-items-center justify-content-center">Sell Token</Form.Label>
           <Form.Select
             value={tokenToBuy}
             onChange={(e) => setTokenToBuy(e.target.value)}
@@ -66,7 +66,7 @@ export default function NewListingForm() {
           </Form.Select>
         </Form.Group>
         <Form.Group as={Col} md={6}>
-          <Form.Label className="d-flex align-items-center justify-content-center">Token to sell</Form.Label>
+          <Form.Label className="d-flex align-items-center justify-content-center">Exchange with</Form.Label>
           <Form.Select
             value={tokenToSell}
             onChange={(e) => setTokenToSell(e.target.value)}
@@ -82,7 +82,7 @@ export default function NewListingForm() {
       </Row>
       <Row className="mb-3">
         <Form.Group as={Col} md={6}>
-          <Form.Label className="d-flex align-items-center justify-content-center">Amount to buy</Form.Label>
+          <Form.Label className="d-flex align-items-center justify-content-center">Quantity</Form.Label>
           <Form.Control
             type="number"
             value={amountToSell}
@@ -91,7 +91,7 @@ export default function NewListingForm() {
           />
         </Form.Group>
         <Form.Group as={Col} md={6}>
-          <Form.Label className="d-flex align-items-center justify-content-center">Amount to buy</Form.Label>
+          <Form.Label className="d-flex align-items-center justify-content-center">Price per unit</Form.Label>
           <Form.Control
             type="number"
             value={amountToBuy}
