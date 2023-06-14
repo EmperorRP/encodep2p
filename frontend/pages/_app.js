@@ -15,16 +15,19 @@ import {
   arbitrumGoerli,
   polygonZkEvm,
   polygonZkEvmTestnet,
+  sepolia,
 } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import MainLayout from "../layout/mainLayout";
 import { useRouter } from "next/router";
+import React from "react";
 
 const { chains, provider } = configureChains(
   [
     mainnet,
     goerli,
+    sepolia,
     polygon,
     polygonMumbai,
     optimism,
@@ -48,6 +51,8 @@ const wagmiClient = createClient({
   provider,
 });
 
+export const AccountContext = React.createContext(null);
+
 export { WagmiConfig, RainbowKitProvider };
 
 function MyApp({ Component, pageProps }) {
@@ -55,8 +60,10 @@ function MyApp({ Component, pageProps }) {
   const account = useAccount({
     onConnect({ address, connector, isReconnected }) {
       if (!isReconnected) router.reload();
+      AccountContext.address = address;
     },
   });
+
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider
@@ -64,9 +71,11 @@ function MyApp({ Component, pageProps }) {
         initialChain={process.env.NEXT_PUBLIC_DEFAULT_CHAIN}
         chains={chains}
       >
-        <MainLayout>
-          <Component {...pageProps} />
-        </MainLayout>
+        <AccountContext.Provider value={account}>
+          <MainLayout>
+            <Component {...pageProps} />
+          </MainLayout>
+        </AccountContext.Provider>
       </RainbowKitProvider>
     </WagmiConfig>
   );

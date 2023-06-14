@@ -3,36 +3,46 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
+import { AccountContext } from '../pages/_app';
+import { useContext } from 'react';
 
-export default function NewListingForm({ onCreateListing }) {
-  const [seller, setSeller] = useState("");
-  const [crypto, setCrypto] = useState("");
-  const [price, setPrice] = useState("");
-  const [minOrder, setMinOrder] = useState("");
-  const [maxOrder, setMaxOrder] = useState("");
-  const [priceInUSD, setPriceInUSD] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("");
+export default function NewListingForm() {
+  const [tokenToBuy, setTokenToBuy] = useState("");
+  const [amountToBuy, setAmountToBuy] = useState("");
+  const [tokenToSell, setTokenToSell] = useState("");
+  const [amountToSell, setAmountToSell] = useState("");
+  const [transactionHash, setTransactionHash] = useState("");
+  const account = useContext(AccountContext);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    onCreateListing({
-      seller,
-      crypto,
-      price,
-      minMaxOrder: `${minOrder}-${maxOrder}`,
-      priceInUSD,
-      paymentMethod,
-    });
+    const formData = {
+      "address": account.address,
+      "token": tokenToBuy,
+      "amount": amountToBuy,
+      "exchangeToken": tokenToSell,
+      "unitAmount": amountToSell,
+    };
 
-    // Reset the form
-    setSeller("");
-    setCrypto("");
-    setPrice("");
-    setMinOrder("");
-    setMaxOrder("");
-    setPriceInUSD("");
-    setPaymentMethod("");
+    alert(JSON.stringify(formData));
+
+    fetch('localhost::5001/postListing', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Handle the response
+        console.log(data);
+        setTransactionHash(data.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   return (
@@ -42,22 +52,27 @@ export default function NewListingForm({ onCreateListing }) {
       </Col>
       <Row className="mb-3">
         <Form.Group as={Col} md={6}>
-          <Form.Label className="d-flex align-items-center justify-content-center">Seller</Form.Label>
-          <Form.Control
-            type="text"
-            value={seller}
-            onChange={(e) => setSeller(e.target.value)}
-            required
-          />
-        </Form.Group>
-        <Form.Group as={Col} md={6}>
-          <Form.Label className="d-flex align-items-center justify-content-center">Crypto</Form.Label>
+          <Form.Label className="d-flex align-items-center justify-content-center">Token to buy</Form.Label>
           <Form.Select
-            value={crypto}
-            onChange={(e) => setCrypto(e.target.value)}
+            value={tokenToBuy}
+            onChange={(e) => setTokenToBuy(e.target.value)}
             required
           >
-            <option value="">-- Select Crypto --</option>
+            <option value="">-- Select token to buy --</option>
+            <option value="MATIC">MATIC</option>
+            <option value="ETH">ETH</option>
+            <option value="USDT">USDT</option>
+            <option value="Sepolia">Sepolia</option>
+          </Form.Select>
+        </Form.Group>
+        <Form.Group as={Col} md={6}>
+          <Form.Label className="d-flex align-items-center justify-content-center">Token to sell</Form.Label>
+          <Form.Select
+            value={tokenToSell}
+            onChange={(e) => setTokenToSell(e.target.value)}
+            required
+          >
+            <option value="">-- Select token to sell --</option>
             <option value="MATIC">MATIC</option>
             <option value="ETH">ETH</option>
             <option value="USDT">USDT</option>
@@ -67,51 +82,29 @@ export default function NewListingForm({ onCreateListing }) {
       </Row>
       <Row className="mb-3">
         <Form.Group as={Col} md={6}>
-          <Form.Label className="d-flex align-items-center justify-content-center">Price</Form.Label>
+          <Form.Label className="d-flex align-items-center justify-content-center">Amount to buy</Form.Label>
           <Form.Control
             type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            value={amountToSell}
+            onChange={(e) => setAmountToSell(e.target.value)}
             required
           />
         </Form.Group>
         <Form.Group as={Col} md={6}>
-          <Form.Label className="d-flex align-items-center justify-content-center">Max order</Form.Label>
+          <Form.Label className="d-flex align-items-center justify-content-center">Amount to buy</Form.Label>
           <Form.Control
             type="number"
-            value={maxOrder}
-            onChange={(e) => setMaxOrder(e.target.value)}
+            value={amountToBuy}
+            onChange={(e) => setAmountToBuy(e.target.value)}
             required
           />
         </Form.Group>
       </Row>
       <Row className="mb-3">
-        <Form.Group as={Col} md={6}>
-          <Form.Label className="d-flex align-items-center justify-content-center">Price in USD</Form.Label>
-          <Form.Control
-            type="number"
-            value={priceInUSD}
-            onChange={(e) => setPriceInUSD(e.target.value)}
-            required
-          />
-        </Form.Group>
-        <Form.Group as={Col} md={6}>
-          <Form.Label className="d-flex align-items-center justify-content-center">Payment Method</Form.Label>
-          <Form.Select
-            value={paymentMethod}
-            onChange={(e) => setPaymentMethod(e.target.value)}
-            required
-          >
-            <option value="">-- Select Payment Method --</option>
-            <option value="MATIC">MATIC</option>
-            <option value="ETH">ETH</option>
-            <option value="USDT">USDT</option>
-            <option value="Sepolia">Sepolia</option>
-          </Form.Select>
-        </Form.Group>
+
       </Row>
       <Col className="d-flex align-items-center justify-content-center">
-        <Button variant="primary col-2 m-4" type="submit">
+        <Button variant="primary col-2 m-4" type="submit" onSubmit={handleSubmit}>
           Create Listing
         </Button>
       </Col>
