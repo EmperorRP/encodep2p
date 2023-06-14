@@ -1,0 +1,38 @@
+
+
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	padding: 2rem 4rem 0.8rem 4rem;
+	gap: 2rem;
+	margin-bottom: 4rem;
+}
+
+
+.alchemy_logo{
+	width: 6rem;
+	cursor: pointer;
+}
+
+.nav_links {
+	display: flex;
+	gap: 1rem;
+	justify-content: center; /* Center the links horizontally */
+	align-items: center; /* Center the links vertically */
+  }
+  
+  .nav_link {
+	color: white;
+	text-decoration: none;
+	transition: color 0.3s ease; /* Animate color transition */
+	font-size: 1.5em; /* Increase the text size */
+	text-align: center; /* Center the text within the link */
+  }
+  
+  .nav_link:hover {
+	color: #0070f3; /* Change color on hover */
+  }
+  
+
