@@ -3,6 +3,7 @@ import{ethers} from "ethers";
 import { AppService } from './app.service';
 import { SellDto } from './dtos/SellDto';
 import {BuyOrderDto} from './dtos/BuyOrderDto';
+import {withdrawDto} from './dtos/withdrawDto';
 
 @Controller()
 export class AppController {
@@ -39,9 +40,20 @@ export class AppController {
     return this.appService.displayList();
   }
 
+  @Get("getMyListings/")
+  getMyListings(@Query('address') address:string){
+    console.log("Fetching all Sellers")
+    return this.appService.getMyListings(address);
+  }
+
   @Post("processBuyOrder")
   processBuyOrder(@Body('') body:BuyOrderDto){
     return this.appService.processBuyOrder(body);
+  }
+  
+  @Post("withdraw/")
+  withdraw(@Body('') body: withdrawDto){
+    return this.appService.withdraw(body);
   }
 
 }

@@ -4,16 +4,14 @@ import React from "react";
 import "tailwindcss/tailwind.css"; // import tailwind css
 import { useSigner } from "wagmi";
 
-export default function ListingCard({ listing }) {
+export default function WithdrawCard({ listing }) {
   const{ data: signer} = useSigner();
-  const onBuy = (e) => {
+  const onWithdraw = (e) => {
     e.preventDefault();
 
     const request = {
-      "address": signer._address,
       "sellOrderID": listing.requestId,
-      "tokenId": listing.exchangeToken,
-      "amount": listing.amount*listing.unitAmount,
+      "address": signer._address,
     };
 
     alert(JSON.stringify(request));
@@ -23,16 +21,15 @@ export default function ListingCard({ listing }) {
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(request),
     };
-    fetch("http://localhost:3001/processBuyOrder",requestOptions)
+    fetch("http://localhost:3001/withdraw",requestOptions)
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
-        alert("Buy Order completed /n.Transaction status - "+data.status+". Txn link - "+data.data);
+        alert("Transaction status - "+data.status+". Txn link - "+data.data);
         window.location.reload();
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("Error");
       });
   };
 
@@ -45,7 +42,7 @@ export default function ListingCard({ listing }) {
       <td className="px-4 py-2">{listing.address}</td>
       <td className="px-4 py-2">{listing.requestId}</td>
       <td>
-        <button type="button" className="btn btn-primary" onClick={onBuy}>Buy</button>
+        <button type="button" className="btn btn-primary" onClick={onWithdraw}>Withdraw</button>
       </td>
     </tr>
   );

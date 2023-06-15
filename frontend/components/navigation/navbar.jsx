@@ -11,7 +11,8 @@ function ColorSchemesExample() {
           <Navbar.Brand href="/" className="font-weight-bold">Home</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/post" className="font-weight-bold">Post</Nav.Link>
-            <Nav.Link href="/listings" className="font-weight-bold">Listings</Nav.Link>
+            <Nav.Link href="/listings" className="font-weight-bold">All Listings</Nav.Link>
+            <Nav.Link href="/myListings" className="font-weight-bold">My Listings</Nav.Link>
           </Nav>
           <ConnectButton />
         </Container>

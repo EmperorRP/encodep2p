@@ -8,6 +8,7 @@ import {ResponseDto} from './dtos/ResponseDto';
 import {BuyOrderDto} from './dtos/BuyOrderDto';
 import * as msusdc from "./assets/msusdc.json";
 import * as skusdc from "./assets/skusdc.json";
+import { withdrawDto } from './dtos/withdrawDto';
 
 @Injectable()
 export class AppService {
@@ -149,5 +150,57 @@ export class AppService {
        response.data= "https://sepolia.etherscan.io/tx/"+returnVal.hash;
       return response;
    }
+
+   async getMyListings(address:string){
+    const returnVal = await this.p2pContract.connect(this.signer).getSellOrders();
+     console.log("Inside getmylistings "+address);
+     console.log(returnVal[0].availableTokens.toNumber());
+     var response:ResponseDto = new ResponseDto();
+     var sellersList:SellerListDto[] = new Array();
+     if(returnVal.length>0){
+      
+    
+      for(var i=0; i<returnVal.length; i++){
+        if(returnVal[i].availableTokens.toNumber()!=0&& returnVal[i].sellerAddress==address){
+          var seller = {token: returnVal[i].tokenId.toString() , address: returnVal[i].sellerAddress,
+           amount:returnVal[i].availableTokens.toNumber(),requestId:returnVal[i].sellOrderId.toNumber(),
+           exchangeToken: returnVal[i].exchangeToken.toString(), unitAmount: returnVal[i].pricePerToken.toNumber()};
+           sellersList.push(seller);
+          }
+      }
+    }
+    if(sellersList.length>0){
+      response.status="Success";
+      response.data=sellersList; 
+      return response; 
+     }
+     else{
+      response.status="Failure";
+      response.data="No tokens Listed";
+     }
+    
+   } 
+  async withdraw(withdraw:withdrawDto){
+      console.log("Inside withdraw");
+      var localSigner:ethers.Wallet;
+      if(withdraw.address==this.signer.address){
+        localSigner = this.signer;
+      } else if(withdraw.address==this.signer2.address){
+        localSigner = this.signer2;
+      }
+    var returnVal= await this.p2pContract.connect(localSigner).withdrawSellOrder(withdraw.sellOrderID);
+    console.log(returnVal);
+    var txn= await this.getTransactionReceipt(returnVal.hash);
+    var response:ResponseDto = new ResponseDto();
+     if(txn.status ==1){
+        response.status="Success";
+     }
+     else if(txn.status==0)
+     {
+        response.status="Failure";
+     }
+     response.data= "https://sepolia.etherscan.io/tx/"+returnVal.hash;
+    return response;
+  }   
 
 }

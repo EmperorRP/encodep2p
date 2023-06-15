@@ -15,7 +15,7 @@ export default function NewListingForm() {
   const account = useContext(AccountContext);
 
   const handleSubmit = (e) => {
-    //e.preventDefault();
+    e.preventDefault();
 
     const formData = {
       "address": account.address,
@@ -26,22 +26,21 @@ export default function NewListingForm() {
     };
 
     alert(JSON.stringify(formData));
+    const requestOptions = {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(formData),
+    };
 
-    fetch('http://localhost:3001/sellToken', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-      .then(response => response.json())
-      .then(data => {
-        // Handle the response
+    fetch("http://localhost:3001/sellToken",requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
         console.log(data);
-        setTransactionHash(data.data);
+        alert("Transaction status - "+data.status+". Txn link - "+data.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
+        alert("Error");
       });
   };
 
