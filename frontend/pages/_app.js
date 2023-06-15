@@ -15,7 +15,6 @@ import {
   arbitrumGoerli,
   polygonZkEvm,
   polygonZkEvmTestnet,
-  sepolia,
 } from "wagmi/chains";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
@@ -27,7 +26,6 @@ const { chains, provider } = configureChains(
   [
     mainnet,
     goerli,
-    sepolia,
     polygon,
     polygonMumbai,
     optimism,

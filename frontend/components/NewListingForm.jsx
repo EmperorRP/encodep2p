@@ -20,9 +20,9 @@ export default function NewListingForm() {
     const formData = {
       "address": account.address,
       "token": tokenToBuy,
-      "amount": amountToBuy,
+      "amount": amountToSell,
       "exchangeToken": tokenToSell,
-      "unitAmount": amountToSell,
+      "unitAmount": amountToBuy,
     };
 
     alert(JSON.stringify(formData));
@@ -59,10 +59,8 @@ export default function NewListingForm() {
             required
           >
             <option value="">-- Select token to buy --</option>
-            <option value="MATIC">MATIC</option>
-            <option value="ETH">ETH</option>
-            <option value="USDT">USDT</option>
-            <option value="Sepolia">Sepolia</option>
+            <option value="MUSDC">MUSDC</option>
+            <option value="SUSDC">SUSDC</option>
           </Form.Select>
         </Form.Group>
         <Form.Group as={Col} md={6}>
@@ -73,10 +71,8 @@ export default function NewListingForm() {
             required
           >
             <option value="">-- Select token to sell --</option>
-            <option value="MATIC">MATIC</option>
-            <option value="ETH">ETH</option>
-            <option value="USDT">USDT</option>
-            <option value="Sepolia">Sepolia</option>
+            <option value="MUSDC">MUSDC</option>
+            <option value="SUSDC">SUSDC</option>
           </Form.Select>
         </Form.Group>
       </Row>
