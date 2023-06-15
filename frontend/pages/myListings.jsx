@@ -26,7 +26,7 @@ export default  function myListings() {
 
   return (
     <div className="text-white p-6 bg-dark">
-      <h1 className="text-4xl mb-4">My Listings</h1>
+      <h1 className="text-4xl mb-4">My Sell orders</h1>
       <Table striped bordered className="table-dark">
         <thead>
           <tr>

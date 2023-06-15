@@ -3,9 +3,11 @@
 import React from "react";
 import "tailwindcss/tailwind.css"; // import tailwind css
 import { useSigner } from "wagmi";
+import { useState, useEffect } from 'react';
 
 export default function ListingCard({ listing }) {
   const{ data: signer} = useSigner();
+
   const onBuy = (e) => {
     e.preventDefault();
 
@@ -19,23 +21,27 @@ export default function ListingCard({ listing }) {
     if(confirm("Do you want to Proceed with the Buy Order?") != true){
       return;
   }
- 
+    
     const requestOptions = {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(request),
     };
+    
+
     fetch("http://localhost:3001/processBuyOrder",requestOptions)
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
-        alert("Buy Order completed /n.Transaction status - "+data.status+"\nTxn link - "+data.data);
+        prompt("Buy Order completed \nTransaction status - "+data.status+"\nTxn link - ",data.data);
         window.location.reload();
       })
       .catch((error) => {
         console.error("Error:", error);
         alert("Error");
       });
+
+    
   };
 
   return (

@@ -10,9 +10,9 @@ function ColorSchemesExample() {
         <Container>
           <Navbar.Brand href="/" className="font-weight-bold">Home</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/post" className="font-weight-bold">Post</Nav.Link>
-            <Nav.Link href="/listings" className="font-weight-bold">All Listings</Nav.Link>
-            <Nav.Link href="/myListings" className="font-weight-bold">My Listings</Nav.Link>
+            <Nav.Link href="/post" className="font-weight-bold">Create Sell order</Nav.Link>
+            <Nav.Link href="/listings" className="font-weight-bold">Listed Sell Orders</Nav.Link>
+            <Nav.Link href="/myListings" className="font-weight-bold">My Sell orders</Nav.Link>
           </Nav>
           <ConnectButton />
         </Container>

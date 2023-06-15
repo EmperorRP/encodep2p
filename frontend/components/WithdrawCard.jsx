@@ -27,7 +27,7 @@ export default function WithdrawCard({ listing }) {
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
-        alert("Sell order withdrawn \nTransaction status - "+data.status+".\nTxn link - "+data.data);
+        prompt("Sell order withdrawn \nTransaction status - "+data.status+".\nTxn link - ",data.data);
         window.location.reload();
       })
       .catch((error) => {

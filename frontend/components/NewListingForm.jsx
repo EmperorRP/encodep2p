@@ -28,6 +28,7 @@ export default function NewListingForm() {
     if(confirm("Do you want to Proceed with the sell Order?") != true){
         return;
     }
+    blur();
     const requestOptions = {
       method: "POST",
       headers: {"Content-Type": "application/json"},
@@ -38,7 +39,8 @@ export default function NewListingForm() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        alert("Sell order Posted Successfully\nTransaction status - "+data.status+".\nTxn link - "+data.data);
+        focus();
+        prompt("Sell order Posted Successfully\nTransaction status - "+data.status+".\nTxn link - ",data.data);
       })
       .catch((error) => {
         console.error(error);
@@ -49,7 +51,7 @@ export default function NewListingForm() {
   return (
     <Form onSubmit={handleSubmit} className='bg-dark'>
       <Col className="d-flex align-items-center justify-content-center">
-        <h1 className="text-4xl mb-4">Post new listing</h1>
+        <h1 className="text-4xl mb-4">Post your sell order</h1>
       </Col>
       <Row className="mb-3">
         <Form.Group as={Col} md={6}>
