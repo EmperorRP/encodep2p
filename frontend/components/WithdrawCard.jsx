@@ -14,7 +14,9 @@ export default function WithdrawCard({ listing }) {
       "address": signer._address,
     };
 
-    alert(JSON.stringify(request));
+    if(confirm("Are you sure you want to withdraw your sell order?") != true){
+      return;
+  }
  
     const requestOptions = {
       method: "POST",
@@ -25,7 +27,7 @@ export default function WithdrawCard({ listing }) {
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
-        alert("Transaction status - "+data.status+". Txn link - "+data.data);
+        alert("Sell order withdrawn \nTransaction status - "+data.status+".\nTxn link - "+data.data);
         window.location.reload();
       })
       .catch((error) => {

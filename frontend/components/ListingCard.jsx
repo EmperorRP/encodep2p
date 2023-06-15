@@ -16,7 +16,9 @@ export default function ListingCard({ listing }) {
       "amount": listing.amount*listing.unitAmount,
     };
 
-    alert(JSON.stringify(request));
+    if(confirm("Do you want to Proceed with the Buy Order?") != true){
+      return;
+  }
  
     const requestOptions = {
       method: "POST",
@@ -27,7 +29,7 @@ export default function ListingCard({ listing }) {
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
-        alert("Buy Order completed /n.Transaction status - "+data.status+". Txn link - "+data.data);
+        alert("Buy Order completed /n.Transaction status - "+data.status+"\nTxn link - "+data.data);
         window.location.reload();
       })
       .catch((error) => {

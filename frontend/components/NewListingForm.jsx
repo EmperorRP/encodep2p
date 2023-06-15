@@ -25,7 +25,9 @@ export default function NewListingForm() {
       "unitAmount": amountToBuy,
     };
 
-    alert(JSON.stringify(formData));
+    if(confirm("Do you want to Proceed with the sell Order?") != true){
+        return;
+    }
     const requestOptions = {
       method: "POST",
       headers: {"Content-Type": "application/json"},
@@ -36,7 +38,7 @@ export default function NewListingForm() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        alert("Transaction status - "+data.status+". Txn link - "+data.data);
+        alert("Sell order Posted Successfully\nTransaction status - "+data.status+".\nTxn link - "+data.data);
       })
       .catch((error) => {
         console.error(error);
