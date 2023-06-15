@@ -117,15 +117,11 @@ contract p2p_new {
     }
 
     function withdrawSellOrder(uint sellOrderId) public {
+        SellOrderDetails memory sellOrder = sellOrderMap[sellOrderId];
+ERC20(whitelistedTokens[sellOrder.tokenId]).transfer(
+            msg.sender,
+            sellOrder.availableTokens
+        );
         sellOrderMap[sellOrderId].availableTokens = 0;
-
-        // balance should be > 0
-        //  require(balance > 0, "balance cannot be 0");
-
-        // Transfer USDC tokens to the users wallet
-        //   USDc.transfer(msg.sender, balance);
-
-        // reset balance to 0
-        // sellOrderMap[msg.sender][tokenId][sellOrderId] = 0;
     }
 }
